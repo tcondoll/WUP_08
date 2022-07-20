@@ -1,7 +1,7 @@
 ---
 title: "simpleRegress"
-author: "put your name here"
-date: "Fall 2020"
+author: "Taelynn Condoll"
+date: "Summer 2022"
 output: html_document
 ---
 
@@ -26,11 +26,102 @@ summary.lm(simp)
 
 ## now predict the length of a bear who has a neck of 17, 22 and 26
 
+```{r}
+lengthBears = predict(simp, newdata=data.frame(NECK=c(17,22,26)))
+```
+
 
 ```{r}
 new <- data.frame(NECK=c(17,22,26))
 predict(simp,new)
 predict(simp,new,se.fit=TRUE)
 ```
+
+The graph does not show a completely accurate line.
+
 ## Surely there is another variable that can better predict LENGTH than NECK. Find one and compare its performance to that of neck by it value of Adjusted-Rsquared (bigger is better).
 
+```{r}
+chesty <- lm(LENGTH~CHEST,data=bears)
+plot(LENGTH~CHEST,data=bears)
+abline(chesty)
+summary.lm(chesty)
+```
+
+The model chest has a slightly more accurate R-square of .79 whereas the model for neck was slightly lower at .75
+
+```{r}
+new <- data.frame(CHEST=c(17,22,26))
+predict(chesty,new)
+predict(chesty,new,se.fit=TRUE)
+```
+
+```{r}
+chesty1 <- lm(LENGTH~AGE,data=bears)
+plot(LENGTH~AGE,data=bears)
+abline(chesty1)
+summary.lm(chesty1)
+```
+
+The adjusted R-squared the model chest here is 0.50 and the model for NECk had an adjusted  R-square of 0.50. So far the best model is the one based on Chest. The best graph out of the last 2 is the first one.
+
+```{r}
+chesty2 <- lm(LENGTH~MONTH,data=bears)
+plot(LENGTH~MONTH,data=bears)
+abline(chesty2)
+summary.lm(chesty2)
+```
+
+```{r}
+chesty3 <- lm(LENGTH~HEADLEN,data=bears)
+plot(LENGTH~HEADLEN,data=bears)
+abline(chesty3)
+summary.lm(chesty3)
+```
+
+The adjusted R-squared for chest here is 0.84 and the model for NECk is 0.80. The best model continues to be chest.
+
+```{r}
+chesty4 <- lm(LENGTH~SEX,data=bears)
+plot(LENGTH~SEX,data=bears)
+abline(chesty4)
+summary.lm(chesty4)
+```
+
+The adjusted R-squared for both chest and NECk are -0.01. This graph does a good job of depicting the bear graph but its negative. This is the best so far.
+
+```{r}
+chesty5 <- lm(LENGTH~HEADWTH,data=bears)
+plot(LENGTH~HEADWTH,data=bears)
+abline(chesty5)
+summary.lm(chesty5)
+```
+
+
+The adjusted R-squared for this model(chest) is 0.53; the model for NECk had an adjusted  R-square of 0.50. Therefore the best model continues to be the negative line graph.
+
+```{r}
+chesty6 <- lm(LENGTH~NECK,data=bears)
+plot(LENGTH~NECK,data=bears)
+abline(chesty6)
+summary.lm(chesty6)
+```
+The adjusted R-squared for both chest and NECk are 0.75. This graph does a bad job of depicting the bear graph.
+
+```{r}
+chesty7 <- lm(LENGTH~LENGTH,data=bears)
+plot(LENGTH~LENGTH,data=bears)
+abline(chesty7)
+summary.lm(chesty7)
+```
+
+
+
+```{r}
+chesty8 <- lm(LENGTH~WEIGHT,data=bears)
+plot(LENGTH~WEIGHT,data=bears)
+abline(chesty8)
+summary.lm(chesty8)
+```
+
+As you can see, headlength has the highest value, therefore headlength is the laargest. The best graph is the one that had a value of -0.01.
